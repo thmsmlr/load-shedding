@@ -34,7 +34,6 @@ def handle_expensive_route():
     )
 
     while datetime.datetime.now() < work_until:
-        # print('here')
         x = 1 + 1
 
     return 'Computed something expensive'
