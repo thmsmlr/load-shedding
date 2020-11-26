@@ -1,13 +1,20 @@
 # Loading Shedding Strategies
 
 This repo has a demo application that demonstrates the usefulness of load shedding strategies.
-After a spike in traffic or a CPU spikes happens you want your services to recover as quickly as possible.
-Load shedding helps improving the mean time to recovery of a web service.
+
+## Why Load Shed
+
+Often during an outage, clients will retry requests and things can get backed up.
+Not only that, if your server is backed up for some reason or another the request queue will grow quickly.
+When the underlying problem eventual resolves you often see a extended duration where the service is unavailable.
+This is generally because it's spending time processing all those queued requests.
+This is wasted effort and dramatically reduces your **mean time to recovery**.
+Load shedding is a method of prioritizing traffic and intentionally dropping traffic to your server in a safe way that gets things up and running more quickly after an outage.
 
 ## How it works
 
 The idea is pretty simple, most networking stacks do naive first in first out queuing.
-During a big traffic spike, you'll get tons of responses queued up for your server to process.
+During a big traffic spike, you'll get tons of requests queued up for your server to process.
 Often however, since your server is behind, by the time the server responds to the request, the client has already closed the connection and moved on.
 In the worst case, the client has already moved on before you service took the request off the queue to process.
 
